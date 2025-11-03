@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main() {
+    int num;
+    int *ptr = &num;  // Pointer stores address of num
+
+    printf("Enter a number: ");
+    scanf("%d", ptr);  // Input directly using pointer
+
+    *ptr = (*ptr) * (*ptr);  // Square the number using pointer
+
+    printf("Square = %d\n", *ptr);  // Print squared value
+
+    return 0;
+}
