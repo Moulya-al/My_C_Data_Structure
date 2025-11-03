@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int *arr;
+    
+    // Allocate memory for 2 integers
+    arr = (int*)malloc(2 * sizeof(int));
+    arr[0] = 1;
+    arr[1] = 2;
+
+    printf("Original array: %d %d\n", arr[0], arr[1]);
+
+    // Resize memory to hold 4 integers
+    arr = (int*)realloc(arr, 4 * sizeof(int));
+    arr[2] = 3;
+    arr[3] = 4;
+
+    printf("Resized array: %d %d %d %d\n", arr[0], arr[1], arr[2], arr[3]);
+
+    free(arr); // free memory
+    return 0;
+}
