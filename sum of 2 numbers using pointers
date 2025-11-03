@@ -1,0 +1,14 @@
+#include<stdio.h>
+int main()
+{
+    int a,b,sum;
+    int *ptr1=&a;
+    int *ptr2=&b;
+    printf("Enter the 1st value:");
+    scanf("%d",ptr1);
+    printf("Enter the 2nd value");
+    scanf("%d",ptr2);
+    sum=*ptr1+*ptr2;
+    printf("Sum=%d",sum);
+    return 0;
+}
