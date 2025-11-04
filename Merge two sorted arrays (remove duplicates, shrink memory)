@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n1, n2;
+
+    // Input size and elements for first array
+    printf("Enter size of first sorted array: ");
+    scanf("%d", &n1);
+    int *a = (int*)malloc(n1 * sizeof(int));
+    printf("Enter %d sorted elements:\n", n1);
+    for (int i = 0; i < n1; i++)
+        scanf("%d", &a[i]);
+
+    // Input size and elements for second array
+    printf("Enter size of second sorted array: ");
+    scanf("%d", &n2);
+    int *b = (int*)malloc(n2 * sizeof(int));
+    printf("Enter %d sorted elements:\n", n2);
+    for (int i = 0; i < n2; i++)
+        scanf("%d", &b[i]);
+
+    // Allocate memory for merged array
+    int *merged = (int*)malloc((n1 + n2) * sizeof(int));
+    int i = 0, j = 0, k = 0;
+
+    // Merge without duplicates
+    while (i < n1 && j < n2) {
+        if (a[i] < b[j])
+            merged[k++] = a[i++];
+        else if (a[i] > b[j])
+            merged[k++] = b[j++];
+        else { // same value, take only one
+            merged[k++] = a[i];
+            i++; j++;
+        }
+    }
+
+    // Copy remaining elements
+    while (i < n1)
+        merged[k++] = a[i++];
+    while (j < n2)
+        merged[k++] = b[j++];
+
+    // Shrink memory to actual used size
+    merged = (int*)realloc(merged, k * sizeof(int));
+
+    // Print final merged array
+    printf("\nMerged sorted array (without duplicates):\n");
+    for (int x = 0; x < k; x++)
+        printf("%d ", merged[x]);
+    printf("\n");
+
+    // Free all memory
+    free(a);
+    free(b);
+    free(merged);
+
+    return 0;
+}
