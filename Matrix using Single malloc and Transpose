@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int R, C;
+    printf("Enter number of rows and columns: ");
+    scanf("%d %d", &R, &C);
+
+    // Allocate memory for R*C integers in one block
+    int *matrix = (int*)malloc(R * C * sizeof(int));
+    if (matrix == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    // Input elements using pointer arithmetic
+    printf("Enter matrix elements:\n");
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            scanf("%d", (matrix + i * C + j));
+        }
+    }
+
+    // Display original matrix
+    printf("\nOriginal Matrix:\n");
+    for (int i = 0; i < R; i++) {
+        for (int j = 0; j < C; j++) {
+            printf("%d ", *(matrix + i * C + j));
+        }
+        printf("\n");
+    }
+
+    // Display transpose of matrix
+    printf("\nTranspose of Matrix:\n");
+    for (int j = 0; j < C; j++) {
+        for (int i = 0; i < R; i++) {
+            printf("%d ", *(matrix + i * C + j));
+        }
+        printf("\n");
+    }
+
+    // Free allocated memory
+    free(matrix);
+    return 0;
+}
