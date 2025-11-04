@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct {
+    int *data;       
+    int size;        
+    int capacity;   
+} DynamicArray;
+
+
+void initArray(DynamicArray *arr) {
+    arr->size = 0;
+    arr->capacity = 2;
+    arr->data = (int*)malloc(arr->capacity * sizeof(int));
+}
+
+void push(DynamicArray *arr, int value) {
+
+    if (arr->size == arr->capacity) {
+        arr->capacity *= 2;
+        arr->data = (int*)realloc(arr->data, arr->capacity * sizeof(int));
+        printf("Capacity doubled to %d\n", arr->capacity);
+    }
+
+  
+    arr->data[arr->size] = value;
+    arr->size++;
+}
+
+
+void printArray(DynamicArray *arr) {
+    printf("Array elements: ");
+    for (int i = 0; i < arr->size; i++) {
+        printf("%d ", arr->data[i]);
+    }
+    printf("\n");
+}
+
+
+void freeArray(DynamicArray *arr) {
+    free(arr->data);
+}
+
+int main() {
+    DynamicArray arr;
+    initArray(&arr);
+
+    push(&arr, 10);
+    push(&arr, 20);
+    push(&arr, 30);
+    push(&arr, 40);
+
+    printArray(&arr);
+
+    freeArray(&arr);
+    return 0;
+}
