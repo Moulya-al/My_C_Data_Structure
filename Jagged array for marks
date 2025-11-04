@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n; // number of students
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    int **marks = (int**)malloc(n * sizeof(int*));  // jagged array
+    int *subjects = (int*)malloc(n * sizeof(int));  // store number of subjects per student
+    float *avg = (float*)malloc(n * sizeof(float)); // store average of each student
+
+    // Input marks for each student
+    for (int i = 0; i < n; i++) {
+        printf("\nEnter number of subjects for student %d: ", i + 1);
+        scanf("%d", &subjects[i]);
+
+        marks[i] = (int*)malloc(subjects[i] * sizeof(int)); // allocate memory for marks
+        int sum = 0;
+
+        printf("Enter marks for %d subjects: ", subjects[i]);
+        for (int j = 0; j < subjects[i]; j++) {
+            scanf("%d", &marks[i][j]);
+            sum += marks[i][j];
+        }
+        avg[i] = (float)sum / subjects[i];
+    }
+
+    // Print averages
+    printf("\nStudent Averages:\n");
+    for (int i = 0; i < n; i++)
+        printf("Student %d average = %.2f\n", i + 1, avg[i]);
+
+    // Find topper
+    int topper = 0;
+    for (int i = 1; i < n; i++) {
+        if (avg[i] > avg[topper])
+            topper = i;
+    }
+
+    printf("\nTopper is Student %d with average %.2f\n", topper + 1, avg[topper]);
+
+    // Free memory
+    for (int i = 0; i < n; i++)
+        free(marks[i]);
+    free(marks);
+    free(subjects);
+    free(avg);
+
+    return 0;
+}
