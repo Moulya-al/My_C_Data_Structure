@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node *next;
+};
+struct Node* createNode(int value) {
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to append a node at the end
+void append(struct Node **head, int value) {
+    struct Node *newNode = createNode(value);
+
+    if (*head == NULL) { // first node
+        *head = newNode;
+        return;
+    }
+
+    struct Node *temp = *head;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = newNode;
+}
+
+
+void printList(struct Node *head) {
+    struct Node *temp = head;
+    printf("List: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+void deleteKthFromEnd(struct Node **head, int k) {
+    struct Node *first = *head;
+    struct Node *second = *head;
+    struct Node *prev = NULL;
+
+  
+    for (int i = 0; i < k; i++) {
+        if (first == NULL) {
+            printf("List has fewer than %d nodes.\n", k);
+            return;
+        }
+        first = first->next;
+    }
+
+ 
+    while (first != NULL) {
+        first = first->next;
+        prev = second;
+        second = second->next;
+    }
+
+
+    if (prev == NULL) {
+        // Deleting the head node
+        *head = second->next;
+    } else {
+        prev->next = second->next;
+    }
+
+    printf("Deleted node with value %d\n", second->data);
+    free(second);
+}
+
+void freeList(struct Node *head) {
+    struct Node *temp;
+    while (head != NULL) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+int main() {
+    struct Node *head = NULL;
+    int n, val, k;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    printf("Enter %d values:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &val);
+        append(&head, val);
+    }
+
+    printList(head);
+
+    printf("Enter k (node to delete from end): ");
+    scanf("%d", &k);
+
+    deleteKthFromEnd(&head, k);
+
+    printf("After deletion:\n");
+    printList(head);
+
+    freeList(head); 
+    return 0;
+}
