@@ -11,7 +11,8 @@ void push(int value){
     }
 }
 void pop() {
- if(top == -1) printf("Stack Underflow\n");
+ if(top == -1)
+printf("Stack Underflow\n");
  else {
  printf("%d popped\n", stack[top]);
  top--;
